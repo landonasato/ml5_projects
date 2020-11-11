@@ -54,6 +54,11 @@ function drawKeypoints() {
         noStroke();
         ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
       }
+      if (keypoint == 0 ) {
+        fill(255, 0, 0);
+        noStroke();
+        ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
+      }
     }
   }
 }
@@ -84,7 +89,7 @@ function confiGrab() {
     leftEyeOutput = poses[0].pose.keypoints[1].score;
     // console.log(leftEyeOutput);
     rightEyeOutput = poses[0].pose.keypoints[2].score;
-    document.getElementById("objectValues").innerHTML = "Nose Confidence Value : " + noseOutput + " Eyes Confidence Value : " + leftEyeOutput;
+    document.getElementById("noseConf").innerHTML = "Nose Confidence Value : " + noseOutput;
 
 }
 
