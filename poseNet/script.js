@@ -1,7 +1,9 @@
+// Local Variables
 let video;
 let poseNet;
 var poses = [];
 
+// Global Variables
 var poseSet = [];
 
 function setup() {
@@ -83,6 +85,7 @@ function displayValues() {
   loop();
 }
 
+//Grab and display confidence values for the listed keypoints
 function confiGrab() {
     // console.log(poses[0].pose);
     noseOutput = poses[0].pose.keypoints[0].score;
@@ -93,7 +96,7 @@ function confiGrab() {
 
 }
 
-
+//Grab and display coordinate values for the listed keypoints
 function locCordData() {
   var noseCoordinateX = poses[0].pose.keypoints[0].position.x;
   var noseCoordinateY = poses[0].pose.keypoints[0].position.y;
