@@ -3,9 +3,21 @@ let video;
 let song;
 let poseNet;
 var poses = [];
+var pepeTime;
 
 // Global Variables
 var poseSet = [];
+
+
+// Game internal timer init
+var hr = 0;
+var min = 0;
+var sec = 0;
+var stoptime = true;
+
+function intTimer() {
+  console.time(pepeTime);
+}
 
 function setup() {
   //Load song for beatmap
@@ -21,8 +33,9 @@ function setup() {
   poseNet.on("pose", function(results) {
     poses = results;
     // console.log(results[0].pose.keypoints[0]);
-    confiGrab();
-    locCordData();
+    // confiGrab();
+    // locCordData();
+    wristData();
   });
   // Hide the video element, and just show the canvas
   video.hide();
@@ -37,6 +50,7 @@ function mousePressed() {
     } else {
       song.play();
       print("Starting");
+      // intTimer();
     }
 }
 
@@ -47,8 +61,7 @@ function modelReady() {
 
 function draw() {
   image(video, 0, 0, width, height);
-
-
+  // console.timeLog(pepeTime);
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
   drawSkeleton();
@@ -100,13 +113,26 @@ function displayValues() {
 
 //Grab and display confidence values for the listed keypoints
 function confiGrab() {
-    // console.log(poses[0].pose);
     noseOutput = poses[0].pose.keypoints[0].score;
     leftEyeOutput = poses[0].pose.keypoints[1].score;
     // console.log(leftEyeOutput);
     rightEyeOutput = poses[0].pose.keypoints[2].score;
     document.getElementById("noseConf").innerHTML = "Nose Confidence Value : " + noseOutput;
 
+}
+
+function wristData() {
+  //Display Left & Right wrist coordinates
+    // console.log(poses[0].pose);
+  var leftWristX = poses[0].pose.keypoints[9].position.x;
+  var leftWristY = poses[0].pose.keypoints[9].position.y;
+
+  // var rightWristX = poses[0].pose.keypoints[]
+  var rightWristX = poses[0].pose.keypoints[10].position.x;
+  var rightWristY = poses[0].pose.keypoints[10].position.y;
+
+  document.getElementById("leftWristCoords").innerHTML = "Left Wrist: " + leftWristX + " , " + leftWristY;
+  document.getElementById("rightWristCoords").innerHTML = "Right Wrist: " + rightWristX + " , " + leftWristY;
 }
 
 //Grab and display coordinate values for the listed keypoints
