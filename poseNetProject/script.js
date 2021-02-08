@@ -5,6 +5,10 @@ let poseNet;
 var poses = [];
 var pepeTime;
 
+var timer;
+var timeAdd = 0; // Numerical value representing seconds
+var timeAddDisplay;
+
 // Global Variables
 var poseSet = [];
 
@@ -17,6 +21,16 @@ var stoptime = true;
 
 function intTimer() {
   console.time(pepeTime);
+}
+
+function updateTimer() {
+  timeAdd = timeAdd + .1;
+  timeAddDisplay = timeAdd.toFixed(1)
+}
+
+function startTimer() {
+  timer = setInterval(updateTimer, 100);
+  updateTimer();
 }
 
 function setup() {
@@ -50,6 +64,7 @@ function mousePressed() {
     } else {
       song.play();
       print("Starting");
+      startTimer();
       // intTimer();
     }
 }
@@ -60,7 +75,7 @@ function modelReady() {
 }
 
 function draw() {
-  image(video, 0, 0, width, height);
+  // image(video, 0, 0, width, height);
   // console.timeLog(pepeTime);
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
@@ -133,6 +148,7 @@ function wristData() {
 
   document.getElementById("leftWristCoords").innerHTML = "Left Wrist: " + leftWristX + " , " + leftWristY;
   document.getElementById("rightWristCoords").innerHTML = "Right Wrist: " + rightWristX + " , " + leftWristY;
+  document.getElementById("gameTimer").innerHTML = "Game Timer: " + timeAddDisplay;
 }
 
 //Grab and display coordinate values for the listed keypoints
